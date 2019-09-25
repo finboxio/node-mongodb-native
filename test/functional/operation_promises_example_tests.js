@@ -3023,8 +3023,7 @@ describe('Operation (Promises)', function() {
                     { strict: true },
                     function(err) {
                       test.equal(null, err);
-                      client.close();
-                      done();
+                      client.close(done);
                     }
                   );
                 });
@@ -5916,8 +5915,7 @@ describe('Operation (Promises)', function() {
                             gridStore.getc().then(function(chr) {
                               test.equal('o', chr.toString());
 
-                              client.close();
-                              done();
+                              client.close(done);
                             });
                           });
                         });
@@ -6981,8 +6979,7 @@ describe('Operation (Promises)', function() {
             cursor.on('end', function() {
               test.ok(new Date().getTime() - s.getTime() > 1000);
 
-              client.close();
-              done();
+              client.close(done);
             });
           });
       });

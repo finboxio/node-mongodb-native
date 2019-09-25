@@ -10,7 +10,7 @@ chai.use(require('chai-subset'));
 
 describe('Operation Examples', function() {
   before(function() {
-    return setupDatabase(this.configuration);
+    return setupDatabase(this.configuration, ['integration_tests_2']);
   });
 
   /**************************************************************************
@@ -103,8 +103,7 @@ describe('Operation Examples', function() {
                 test.equal('fun', result[1]._id.tags);
                 test.deepEqual(['bob'], result[1].authors);
 
-                client.close();
-                done();
+                client.close(done);
               });
             }
           );
@@ -194,8 +193,7 @@ describe('Operation Examples', function() {
           cursor.toArray(function(err, docs) {
             test.equal(null, err);
             test.equal(2, docs.length);
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -283,8 +281,7 @@ describe('Operation Examples', function() {
           cursor.toArray(function(err, docs) {
             test.equal(null, err);
             test.equal(2, docs.length);
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -376,8 +373,7 @@ describe('Operation Examples', function() {
             // Need to close cursor since cursor is not
             // exhausted, and implicit session is still open
             cursor.close();
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -466,8 +462,7 @@ describe('Operation Examples', function() {
             test.equal(null, err);
 
             if (docs == null) {
-              done();
-              client.close();
+              client.close(done);
             }
           });
         });
@@ -563,8 +558,7 @@ describe('Operation Examples', function() {
               test.equal(null, err);
               test.equal(2, count);
 
-              done();
-              client.close();
+              client.close(done);
             }
           );
         });
@@ -714,8 +708,7 @@ describe('Operation Examples', function() {
               test.equal(null, err);
               test.equal(1, count);
 
-              client.close();
-              done();
+              client.close(done);
             });
           });
         });
@@ -780,8 +773,7 @@ describe('Operation Examples', function() {
                     test.equal(null, err);
                     test.ok(explanation != null);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               }
@@ -840,8 +832,7 @@ describe('Operation Examples', function() {
               test.equal(null, err);
               test.ok(explanation != null);
 
-              client.close();
-              done();
+              client.close(done);
             });
           });
         });
@@ -905,8 +896,7 @@ describe('Operation Examples', function() {
                   test.equal(null, err);
                   test.ok(explanation != null);
 
-                  client.close();
-                  done();
+                  client.close(done);
                 });
               });
             });
@@ -971,8 +961,7 @@ describe('Operation Examples', function() {
               collection.distinct('b.c', function(err, docs) {
                 test.deepEqual(['a', 'b', 'c'], docs.sort());
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           }
@@ -1033,8 +1022,7 @@ describe('Operation Examples', function() {
             collection.distinct('a', { c: 1 }, function(err, docs) {
               test.deepEqual([5], docs.sort());
 
-              client.close();
-              done();
+              client.close(done);
             });
           }
         );
@@ -1096,8 +1084,7 @@ describe('Operation Examples', function() {
             test.equal(false, found);
 
             // Let's close the db
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -1143,8 +1130,7 @@ describe('Operation Examples', function() {
             test.equal(null, err);
 
             // Let's close the db
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -1207,8 +1193,7 @@ describe('Operation Examples', function() {
                     test.deepEqual([['_id', 1]], indexInformation._id_);
                     test.equal(undefined, indexInformation.a_1_b_1);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               }
@@ -1276,8 +1261,7 @@ describe('Operation Examples', function() {
                     test.equal(null, err);
                     test.ok(explanation != null);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               }
@@ -1344,8 +1328,7 @@ describe('Operation Examples', function() {
                     test.equal(null, err);
                     test.ok(explanation != null);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               }
@@ -1401,8 +1384,7 @@ describe('Operation Examples', function() {
               test.equal(null, err);
               test.equal(3, docs.length);
 
-              client.close();
-              done();
+              client.close(done);
             });
           }
         );
@@ -1454,8 +1436,7 @@ describe('Operation Examples', function() {
               test.equal(null, err);
               test.ok(explain != null);
 
-              client.close();
-              done();
+              client.close(done);
             });
           }
         );
@@ -1514,8 +1495,7 @@ describe('Operation Examples', function() {
                 test.equal(undefined, docs[0].a);
                 test.equal(2, docs[0].b);
 
-                client.close();
-                done();
+                client.close(done);
               });
           }
         );
@@ -1606,8 +1586,7 @@ describe('Operation Examples', function() {
                           test.equal(1, doc.value.d);
                           test.equal(1, doc.value.f);
 
-                          client.close();
-                          done();
+                          client.close(done);
                         }
                       );
                     });
@@ -1672,8 +1651,7 @@ describe('Operation Examples', function() {
                 test.equal(null, err);
                 test.equal(null, item);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           }
@@ -1727,8 +1705,7 @@ describe('Operation Examples', function() {
               test.equal(undefined, doc.a);
               test.equal(2, doc.b);
 
-              client.close();
-              done();
+              client.close(done);
             });
           }
         );
@@ -1789,8 +1766,7 @@ describe('Operation Examples', function() {
                 { search: { a: 1 }, limit: 1, maxDistance: 100 },
                 function(err, docs) {
                   test.equal(1, docs.results.length);
-                  client.close();
-                  done();
+                  client.close(done);
                 }
               );
             }
@@ -1862,8 +1838,7 @@ describe('Operation Examples', function() {
               collection.findOne({ _id: 2 }, function(err, result) {
                 test.equal(1, result.value);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           });
@@ -1940,8 +1915,7 @@ describe('Operation Examples', function() {
               { out: { replace: 'mapreduce_integration_test' }, verbose: true },
               function(err, result) {
                 test.ok(result.stats != null);
-                client.close();
-                done();
+                client.close(done);
               }
             );
           });
@@ -2036,8 +2010,7 @@ describe('Operation Examples', function() {
                   outCollection.find().toArray(function(err, results) {
                     test.equal(2, results[0].value);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               });
@@ -2133,8 +2106,7 @@ describe('Operation Examples', function() {
                   // Find all entries in the map-reduce collection
                   outCollection.find().toArray(function(err, results) {
                     test.equal(2, results[0].value);
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               });
@@ -2194,8 +2166,7 @@ describe('Operation Examples', function() {
               collection.indexes(function(err, indexes) {
                 test.equal(3, indexes.length);
 
-                client.close();
-                done();
+                client.close(done);
               });
             }, 1000);
           });
@@ -2257,8 +2228,7 @@ describe('Operation Examples', function() {
               collection.indexExists('c_1', function(err, result) {
                 test.equal(false, result);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           });
@@ -2327,8 +2297,7 @@ describe('Operation Examples', function() {
                     test.deepEqual({ _id: 1 }, indexInformation[0].key);
                     test.deepEqual({ a: 1, b: 1 }, indexInformation[1].key);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               }
@@ -2396,8 +2365,7 @@ describe('Operation Examples', function() {
                     test.deepEqual({ _id: 1 }, indexInformation[0].key);
                     test.deepEqual({ a: 1, b: 1 }, indexInformation[1].key);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               }
@@ -2448,8 +2416,7 @@ describe('Operation Examples', function() {
           collection.findOne({ hello: 'world_no_safe' }, function(err, item) {
             test.equal(null, err);
             test.equal('world_no_safe', item.hello);
-            client.close();
-            done();
+            client.close(done);
           });
         }, 100);
       });
@@ -2501,8 +2468,7 @@ describe('Operation Examples', function() {
             collection.findOne({ hello: 'world_safe2' }, function(err, item) {
               test.equal(null, err);
               test.equal('world_safe2', item.hello);
-              client.close();
-              done();
+              client.close(done);
             });
           }
         );
@@ -2561,8 +2527,7 @@ describe('Operation Examples', function() {
             collection.findOne({ hello: 'world' }, function(err, item) {
               test.equal(null, err);
               test.ok('function() {}', item.code);
-              client.close();
-              done();
+              client.close(done);
             });
           }
         );
@@ -2636,8 +2601,7 @@ describe('Operation Examples', function() {
                   // Count the number of documents left (should not include the duplicates)
                   collection.count(function(err, count) {
                     test.equal(3, count);
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 }
               );
@@ -2688,8 +2652,7 @@ describe('Operation Examples', function() {
           collection.isCapped(function(err, capped) {
             test.equal(true, capped);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -2737,8 +2700,7 @@ describe('Operation Examples', function() {
             test.equal(true, options.capped);
             test.ok(options.size >= 1024);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -2810,8 +2772,7 @@ describe('Operation Examples', function() {
                 if (left === 0) {
                   test.equal(docs.length, results.length);
 
-                  client.close();
-                  done();
+                  client.close(done);
                 }
               });
             }
@@ -2878,8 +2839,7 @@ describe('Operation Examples', function() {
                     test.deepEqual([['_id', 1]], indexInformation._id_);
                     test.deepEqual([['a', 1], ['b', 1]], indexInformation.a_1_b_1);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               }
@@ -2933,8 +2893,7 @@ describe('Operation Examples', function() {
           collection.find().toArray(function(err, items) {
             test.equal(null, err);
             test.equal(0, items.length);
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -2983,8 +2942,7 @@ describe('Operation Examples', function() {
           collection.removeOne({ a: 1 }, { w: 1 }, function(err, r) {
             test.equal(null, err);
             test.equal(1, r.result.n);
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -3095,8 +3053,7 @@ describe('Operation Examples', function() {
                   // Ensure that the collection is pointing to the new one
                   collection2.count(function(err, count) {
                     test.equal(2, count);
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               });
@@ -3147,8 +3104,7 @@ describe('Operation Examples', function() {
           collection.findOne({ hello: 'world' }, function(err, item) {
             test.equal(null, err);
             test.equal('world', item.hello);
-            client.close();
-            done();
+            client.close(done);
           });
         }, 2000);
       });
@@ -3211,8 +3167,7 @@ describe('Operation Examples', function() {
                 test.equal('world', item.hello);
                 test.equal('world2', item.hello2);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           });
@@ -3268,8 +3223,7 @@ describe('Operation Examples', function() {
               test.equal(null, err);
               test.equal(1, item.a);
               test.equal(2, item.b);
-              client.close();
-              done();
+              client.close(done);
             });
           }, 1000);
         });
@@ -3321,8 +3275,7 @@ describe('Operation Examples', function() {
             test.equal(null, err);
             test.equal(1, item.a);
             test.equal(2, item.b);
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -3382,8 +3335,7 @@ describe('Operation Examples', function() {
                 test.equal(1, items[1].a);
                 test.equal(0, items[1].b);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           }
@@ -3436,8 +3388,7 @@ describe('Operation Examples', function() {
             collection.stats(function(err, stats) {
               test.equal(2, stats.count);
 
-              client.close();
-              done();
+              client.close(done);
             });
           }
         );
@@ -3508,8 +3459,7 @@ describe('Operation Examples', function() {
                         test.equal(undefined, indexInformation.a_1_b_1);
                         test.equal(undefined, indexInformation.c_1);
 
-                        client.close();
-                        done();
+                        client.close(done);
                       });
                     });
                   }
@@ -3561,8 +3511,7 @@ describe('Operation Examples', function() {
         var adminDb = db.admin();
         test.ok(adminDb != null);
 
-        client.close();
-        done();
+        client.close(done);
       });
       // END
     }
@@ -3621,8 +3570,7 @@ describe('Operation Examples', function() {
               expect(err).to.exist;
               expect(result).to.not.exist;
 
-              client.close();
-              done();
+              client.close(done);
             });
           });
         });
@@ -3759,8 +3707,7 @@ describe('Operation Examples', function() {
                 test.equal(null, err);
                 test.ok(items.length >= 1);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
         });
@@ -3810,8 +3757,7 @@ describe('Operation Examples', function() {
               db1.listCollections().toArray(function(err, items) {
                 test.equal(1, items.length);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
         });
@@ -3872,8 +3818,7 @@ describe('Operation Examples', function() {
                 test.ok(col3);
                 test.equal(null, err);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           });
@@ -3918,8 +3863,7 @@ describe('Operation Examples', function() {
           test.equal(null, err);
           test.ok(collections.length > 0);
 
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -3964,8 +3908,7 @@ describe('Operation Examples', function() {
             test.ok(result);
             test.equal(null, err);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -4087,8 +4030,7 @@ describe('Operation Examples', function() {
               test.ok(result);
               test.equal(null, err);
 
-              client.close();
-              done();
+              client.close(done);
             });
           }
         );
@@ -4158,8 +4100,7 @@ describe('Operation Examples', function() {
                     .toArray(function(err, names) {
                       test.equal(0, names.length);
 
-                      client.close();
-                      done();
+                      client.close(done);
                     });
                 });
               });
@@ -4206,8 +4147,7 @@ describe('Operation Examples', function() {
           test.ok(result);
           test.equal(null, err);
 
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -4283,8 +4223,7 @@ describe('Operation Examples', function() {
                           .toArray(function(err, names) {
                             test.equal(1, names.length);
 
-                            client.close();
-                            done();
+                            client.close(done);
                           });
                       });
                   });
@@ -4355,8 +4294,7 @@ describe('Operation Examples', function() {
                     test.equal(null, err);
                     test.ok(explanation != null);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               }
@@ -4425,8 +4363,7 @@ describe('Operation Examples', function() {
                     test.equal(null, err);
                     test.ok(explanation != null);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               }
@@ -4496,8 +4433,7 @@ describe('Operation Examples', function() {
                   // We should not find the databases
                   if (process.env['JENKINS'] == null) test.equal(false, found);
 
-                  client.close();
-                  done();
+                  client.close(done);
                 });
               }, 2000);
             });
@@ -4542,8 +4478,7 @@ describe('Operation Examples', function() {
           test.equal(null, err);
           test.ok(stats != null);
 
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -4604,8 +4539,7 @@ describe('Operation Examples', function() {
               multipleColl2.count(function(err, count) {
                 test.equal(1, count);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           });
@@ -4655,8 +4589,7 @@ describe('Operation Examples', function() {
         // REMOVE-LINE done();
         // REMOVE-LINE var db = client.db(configuration.db);
         // BEGIN
-        client.close();
-        done();
+        client.close(done);
       });
       // END
     }
@@ -4703,8 +4636,7 @@ describe('Operation Examples', function() {
           test.ok(info);
           test.equal(null, err);
 
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -4745,8 +4677,7 @@ describe('Operation Examples', function() {
           test.ok(info);
           test.equal(null, err);
 
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -4797,8 +4728,7 @@ describe('Operation Examples', function() {
             test.ok(level);
             test.equal(null, err);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -4867,8 +4797,7 @@ describe('Operation Examples', function() {
                   test.ok(infos[0].ts.constructor === Date);
                   test.ok(infos[0].millis.constructor === Number);
 
-                  client.close();
-                  done();
+                  client.close(done);
                 });
               });
             });
@@ -4923,8 +4852,7 @@ describe('Operation Examples', function() {
             test.ok(doc);
             test.equal(null, err);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -4965,8 +4893,7 @@ describe('Operation Examples', function() {
           test.ok(pingResult);
           test.equal(null, err);
 
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -5009,8 +4936,7 @@ describe('Operation Examples', function() {
           adminDb.removeUser('admin11', function(err, result) {
             test.ok(result);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -5055,8 +4981,7 @@ describe('Operation Examples', function() {
             test.equal(null, err);
             test.equal(true, result);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -5100,8 +5025,7 @@ describe('Operation Examples', function() {
           test.equal(null, err);
           test.ok(dbs.databases.length > 0);
 
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -5140,8 +5064,7 @@ describe('Operation Examples', function() {
           expect(err).to.not.exist;
           expect(dbs.databases).to.containSubset([{ name: 'admin' }]);
 
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -5191,8 +5114,7 @@ describe('Operation Examples', function() {
             test.equal(null, err);
             test.ok(info != null);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -5244,8 +5166,7 @@ describe('Operation Examples', function() {
             test.ok(info);
             test.equal(null, err);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -5303,8 +5224,7 @@ describe('Operation Examples', function() {
             test.equal(1, documents.length);
             test.deepEqual([1, 2, 3], documents[0].b);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -5362,8 +5282,7 @@ describe('Operation Examples', function() {
                 test.equal(null, err);
 
                 // Let's close the db
-                client.close();
-                done();
+                client.close(done);
               });
             }
           });
@@ -5424,8 +5343,7 @@ describe('Operation Examples', function() {
             function(err) {
               test.equal(null, err);
               test.equal(1, count);
-              client.close();
-              done();
+              client.close(done);
             }
           );
         });
@@ -5492,8 +5410,7 @@ describe('Operation Examples', function() {
             cursor.next(function(err, item) {
               test.equal(0, item.a);
 
-              client.close();
-              done();
+              client.close(done);
             });
           });
         });
@@ -5548,8 +5465,7 @@ describe('Operation Examples', function() {
             test.equal(null, err);
             test.equal(2, count);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -5614,8 +5530,7 @@ describe('Operation Examples', function() {
                     test.equal(null, err);
                     test.equal(3, item.a);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
               });
           }
@@ -5674,8 +5589,7 @@ describe('Operation Examples', function() {
                 test.equal(null, err);
                 test.equal(1, items.length);
 
-                client.close();
-                done();
+                client.close(done);
               });
           }
         );
@@ -5733,8 +5647,7 @@ describe('Operation Examples', function() {
                 test.equal(null, err);
                 test.equal(2, item.a);
 
-                client.close();
-                done();
+                client.close(done);
               });
           }
         );
@@ -5794,8 +5707,7 @@ describe('Operation Examples', function() {
               // Need to close cursor, since it was not exhausted,
               // and implicit session is still open
               cursor.close();
-              client.close();
-              done();
+              client.close(done);
             });
           }
         );
@@ -5876,8 +5788,7 @@ describe('Operation Examples', function() {
                           test.equal(null, err);
                           test.ok(!r);
 
-                          client.close();
-                          done();
+                          client.close(done);
                         });
                       });
                     });
@@ -5938,8 +5849,7 @@ describe('Operation Examples', function() {
               test.ok(explanation);
               test.equal(null, err);
 
-              client.close();
-              done();
+              client.close(done);
             });
           }
         );
@@ -5997,8 +5907,7 @@ describe('Operation Examples', function() {
 
           // Execute find on all the documents
           stream.on('end', function() {
-            client.close();
-            done();
+            client.close(done);
           });
 
           stream.on('data', function(data) {
@@ -6068,8 +5977,7 @@ describe('Operation Examples', function() {
               test.equal(null, err);
               test.equal(true, cursor.isClosed());
 
-              client.close();
-              done();
+              client.close(done);
             });
           });
         });
@@ -6135,8 +6043,7 @@ describe('Operation Examples', function() {
               test.ok(result);
               test.equal(null, err);
 
-              client.close();
-              done();
+              client.close(done);
             });
           });
         });
@@ -6207,8 +6114,7 @@ describe('Operation Examples', function() {
           // When the stream is done
           stream.on('end', function() {
             test.equal(null, fetchedDocs[1]);
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -6269,8 +6175,7 @@ describe('Operation Examples', function() {
 
           // When the stream is done
           stream.on('close', function() {
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -6329,8 +6234,7 @@ describe('Operation Examples', function() {
             test.equal(null, err);
             test.equal(1, result.result.n);
 
-            client.close();
-            done();
+            client.close(done);
           });
       });
       // END
@@ -6379,8 +6283,7 @@ describe('Operation Examples', function() {
             test.equal(null, err);
             test.equal(1, result);
 
-            client.close();
-            done();
+            client.close(done);
           });
       });
       // END
@@ -6427,8 +6330,7 @@ describe('Operation Examples', function() {
             test.equal(null, err);
             test.equal(1, result.result.n);
 
-            client.close();
-            done();
+            client.close(done);
           });
       });
       // END
@@ -6714,8 +6616,7 @@ describe('Operation Examples', function() {
                 test.equal(null, err);
                 test.equal(false, result);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           });
@@ -6846,8 +6747,7 @@ describe('Operation Examples', function() {
                             test.ok(found);
                             test.ok(found2);
 
-                            client.close();
-                            done();
+                            client.close(done);
                           });
                         });
                       });
@@ -6907,8 +6807,7 @@ describe('Operation Examples', function() {
               GridStore.read(db, 'test_gs_puts_and_readlines', function(err, data) {
                 test.equal('line one\n', data.toString());
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           });
@@ -6989,8 +6888,7 @@ describe('Operation Examples', function() {
                         collection.count(function(err, count) {
                           test.equal(0, count);
 
-                          client.close();
-                          done();
+                          client.close(done);
                         });
                       });
                     });
@@ -7062,8 +6960,7 @@ describe('Operation Examples', function() {
                     // Compare the file content against the orgiinal
                     test.equal(data.toString('base64'), data2.toString('base64'));
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               });
@@ -7124,8 +7021,7 @@ describe('Operation Examples', function() {
                 test.equal(null, err);
                 test.equal(true, result);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           });
@@ -7188,8 +7084,7 @@ describe('Operation Examples', function() {
                 test.equal(null, err);
                 test.equal(true, result);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           });
@@ -7253,8 +7148,7 @@ describe('Operation Examples', function() {
               test.equal(data.toString('base64'), fileData.toString('base64'));
               test.equal(fileSize, fileData.length);
 
-              client.close();
-              done();
+              client.close(done);
             });
           });
         });
@@ -7324,8 +7218,7 @@ describe('Operation Examples', function() {
               test.equal(data.toString('base64'), fileData.toString('base64'));
               test.equal(fileSize, fileData.length);
 
-              client.close();
-              done();
+              client.close(done);
             });
           });
         });
@@ -7386,8 +7279,7 @@ describe('Operation Examples', function() {
                 GridStore.read(db, fileId, function(err, fileData) {
                   test.equal('Hello worldBuffer Hello world', fileData.toString());
 
-                  client.close();
-                  done();
+                  client.close(done);
                 });
               });
             });
@@ -7444,8 +7336,7 @@ describe('Operation Examples', function() {
               test.ok(result);
               test.equal(null, err);
 
-              client.close();
-              done();
+              client.close(done);
             });
           });
         });
@@ -7498,8 +7389,7 @@ describe('Operation Examples', function() {
             test.ok(collection);
             test.equal(null, err);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -7565,8 +7455,7 @@ describe('Operation Examples', function() {
                     test.equal(null, err);
                     test.equal(false, result);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               });
@@ -7622,8 +7511,7 @@ describe('Operation Examples', function() {
             test.ok(collection);
             test.equal(null, err);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -7685,8 +7573,7 @@ describe('Operation Examples', function() {
                   GridStore.readlines(db, fileId, function(err, lines) {
                     test.deepEqual(['line one\n', 'line two\n', 'line three\n'], lines);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               });
@@ -7755,8 +7642,7 @@ describe('Operation Examples', function() {
                     gridStore.readlines(function(err, lines) {
                       test.deepEqual(['line one\n', 'line two\n', 'line three\n'], lines);
 
-                      client.close();
-                      done();
+                      client.close(done);
                     });
                   });
                 });
@@ -7814,8 +7700,7 @@ describe('Operation Examples', function() {
               GridStore.read(db, result._id, function(err, fileData) {
                 test.equal(data.length, fileData.length);
 
-                client.close();
-                done();
+                client.close(done);
               });
             });
           });
@@ -7887,8 +7772,7 @@ describe('Operation Examples', function() {
                 stream.on('end', function() {
                   // Verify the correctness of the read data
                   test.equal(data.length, readLen);
-                  client.close();
-                  done();
+                  client.close(done);
                 });
               });
             });
@@ -7941,8 +7825,7 @@ describe('Operation Examples', function() {
           GridStore.read(db, 'test_stream_write', function(err, gridData) {
             var fileData = fs.readFileSync('./test/functional/data/test_gs_working_field_read.pdf');
             test.equal(fileData.toString('hex'), gridData.toString('hex'));
-            client.close();
-            done();
+            client.close(done);
           });
         });
 
@@ -8011,8 +7894,7 @@ describe('Operation Examples', function() {
                 }
 
                 // Close the database
-                client.close();
-                done();
+                client.close(done);
               });
             });
 
@@ -8211,8 +8093,7 @@ describe('Operation Examples', function() {
                         GridStore.read(db, fileId, function(err, data) {
                           test.equal('abc', data.toString());
 
-                          client.close();
-                          done();
+                          client.close(done);
                         });
                       });
                     });
@@ -8271,8 +8152,7 @@ describe('Operation Examples', function() {
               // Verify that we are at the end of the file
               test.equal(true, gridStore.eof());
 
-              client.close();
-              done();
+              client.close(done);
             });
           });
         });
@@ -8333,8 +8213,7 @@ describe('Operation Examples', function() {
                   gridStore.tell(function(err, position) {
                     test.equal(5, position);
 
-                    client.close();
-                    done();
+                    client.close(done);
                   });
                 });
               });
@@ -8390,8 +8269,7 @@ describe('Operation Examples', function() {
                 gridStore.getc(function(err, chr) {
                   test.equal('h', chr.toString());
 
-                  client.close();
-                  done();
+                  client.close(done);
                 });
               });
             });
@@ -8466,8 +8344,7 @@ describe('Operation Examples', function() {
                           gridStore.getc(function(err, chr) {
                             test.equal('h', chr.toString());
 
-                            client.close();
-                            done();
+                            client.close(done);
                           });
                         });
                       });
@@ -8544,8 +8421,7 @@ describe('Operation Examples', function() {
 
                 // For each data item
                 stream.on('end', function() {
-                  client.close();
-                  done();
+                  client.close(done);
                 });
               });
             });
@@ -8630,8 +8506,7 @@ describe('Operation Examples', function() {
                 stream.on('end', function() {
                   // Have we received the same file back?
                   test.equal(fileBuffer, fileBody);
-                  client.close();
-                  done();
+                  client.close(done);
                 });
 
                 // Resume the stream
@@ -8703,8 +8578,7 @@ describe('Operation Examples', function() {
                 // When the stream is done
                 stream.on('end', function() {
                   setTimeout(() => {
-                    client.close();
-                    done();
+                    client.close(done);
                   }, 1000);
                 });
               });
@@ -8783,8 +8657,7 @@ describe('Operation Examples', function() {
           test.ok(upsert._id != null);
 
           // Finish up test
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -8852,8 +8725,7 @@ describe('Operation Examples', function() {
           test.ok(upsert._id != null);
 
           // Finish up test
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -8900,8 +8772,7 @@ describe('Operation Examples', function() {
           test.equal(null, err);
           test.equal(1, r.insertedCount);
           // Finish up test
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -8942,8 +8813,7 @@ describe('Operation Examples', function() {
           test.equal(null, err);
           test.equal(2, r.insertedCount);
           // Finish up test
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -8985,8 +8855,7 @@ describe('Operation Examples', function() {
           test.equal(0, r.matchedCount);
           test.equal(1, r.upsertedCount);
           // Finish up test
-          client.close();
-          done();
+          client.close(done);
         });
       });
       // END
@@ -9034,8 +8903,7 @@ describe('Operation Examples', function() {
             test.equal(2, r.modifiedCount);
 
             // Finish up test
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -9081,8 +8949,7 @@ describe('Operation Examples', function() {
             test.equal(null, err);
             test.equal(1, r.deletedCount);
             // Finish up test
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -9130,8 +8997,7 @@ describe('Operation Examples', function() {
             test.equal(2, r.deletedCount);
 
             // Finish up test
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -9195,8 +9061,7 @@ describe('Operation Examples', function() {
             test.equal(2, Object.keys(r.upsertedIds).length);
 
             // Ordered bulk operation
-            client.close();
-            done();
+            client.close(done);
           }
         );
       });
@@ -9246,8 +9111,7 @@ describe('Operation Examples', function() {
             test.equal(1, r.lastErrorObject.n);
             test.equal(1, r.value.b);
 
-            client.close();
-            done();
+            client.close(done);
           });
         });
       });
@@ -9304,8 +9168,7 @@ describe('Operation Examples', function() {
               test.equal(1, r.value.b);
               test.equal(1, r.value.c);
 
-              client.close();
-              done();
+              client.close(done);
             }
           );
         });
@@ -9363,8 +9226,7 @@ describe('Operation Examples', function() {
               test.equal(1, r.value.b);
               test.equal(1, r.value.d);
 
-              client.close();
-              done();
+              client.close(done);
             }
           );
         });
@@ -9435,8 +9297,7 @@ describe('Operation Examples', function() {
               });
 
               cursor.on('end', function() {
-                client.close();
-                done();
+                client.close(done);
               });
             });
           }
